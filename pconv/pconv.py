@@ -30,6 +30,7 @@ class MLPBlock(tf.keras.layers.Layer):
                                             padding="valid",
                                             data_format="channels_last",
                                             )
+        self.bn = tf.keras.layers.BatchNormalization()
         self.activation = tf.keras.layers.ReLU()
         self.second = tf.keras.layers.Conv2D(self.p_dim,
                                             kernel_size=(1,1),
@@ -39,7 +40,7 @@ class MLPBlock(tf.keras.layers.Layer):
                                             )
 
     def call(self, inputs):
-        return self.second(self.activation(self.first(inputs)))
+        return self.second(self.activation(self.bn(self.first(inputs))))
     
 class FasternetBlock(tf.keras.layers.Layer):
     def __init__(self, dim, n_div, hidden_dim, padding="same"):
