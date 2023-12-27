@@ -55,5 +55,5 @@ class FasternetBlock(tf.keras.layers.Layer):
                             hidden_dim=hidden_dim)
 
     def call(self, inputs):
-        bypass = tf.Tensor.__copy__(inputs)
+        bypass = tf.identity(inputs)
         return self.second(self.first(inputs)) + bypass
